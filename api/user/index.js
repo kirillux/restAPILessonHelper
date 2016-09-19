@@ -2,6 +2,7 @@
  * Created by Kirill on 9/19/2016.
  */
 'use strict';
+
 const userApi = {
     register: function (server, options, next) {
         const routes = require('./user-routes');
