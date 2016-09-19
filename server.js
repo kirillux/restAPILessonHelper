@@ -6,10 +6,8 @@ const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
 const Good = require('good');
 
-
 //mongoose ORM
 const Mongoose = require ('mongoose');
-
 const server = new Hapi.Server();
 
 //Connect 2 mongoose database
@@ -22,11 +20,10 @@ server.connection({
 const options = {
     info: {
         'title': 'Test API Documentation',
-        'version': '16.5.0',
+        'version': '16.5.0'
     }
 };
-
-//Server start + console Good plugin
+//Server start + console Good plugin + pluginss
 server.register([
     Inert,
     Vision,
@@ -51,20 +48,26 @@ server.register([
             }
         }
     },
+    {
+        register: require('./api/user/index'),
+        options: {}
+    },
+    {
+        register: require('./api/vak/index'),
+        options: {}
+    }
 ], (err) => {
-
-    server.start( (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Server running at:', server.info.uri);
-        }
-    });
+    if (err) {
+        console.error('Failed to load a plugin:', err);
+    }
 });
 
-//Adding routes here:
-const routes = require('./routes');
-server.route(routes);
-
-
+server.start( (err) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Server running at:', server.info.uri);
+    }
+});
+module.exports = server;
 
