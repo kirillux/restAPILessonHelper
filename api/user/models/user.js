@@ -12,5 +12,4 @@ let userSchema = new Schema({
     created: { type: Date, default: Date.now }
 
 });
-
 module.exports = Mongoose.model('User', userSchema, 'User');
