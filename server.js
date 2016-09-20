@@ -1,5 +1,6 @@
 'use strict';
 
+
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Vision = require('vision');
@@ -49,11 +50,11 @@ server.register([
         }
     },
     {
-        register: require('./api/user/index'),
+        register: require('./app/user/index'),
         options: {}
     },
     {
-        register: require('./api/vak/index'),
+        register: require('./app/vak/index'),
         options: {}
     }
 ], (err) => {

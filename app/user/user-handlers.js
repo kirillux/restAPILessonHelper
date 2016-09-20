@@ -2,23 +2,18 @@
  * Created by Kirill on 9/19/2016.
  */
 'use strict';
-const UserModel = new require('./models/user');
+const Boom = require('boom');
+const UserModel = new require('../models/user');
 const UserHandlers = {};
 
 UserHandlers.getUsers = function(request, reply) {
     //Fetch all data from mongodb User Collection
     UserModel.find({}, function (error, data) {
         if (error) {
-            reply({
-                statusCode: 503,
-                message: 'Failed to get data',
-                data: error
-            });
+            reply(Boom.notFound(error));
         } else {
             reply({
-                statusCode: 200,
-                message: 'User Data Successfully Fetched',
-                data: data
+                data:data
             });
         }
     });
@@ -27,24 +22,17 @@ UserHandlers.getUsers = function(request, reply) {
 UserHandlers.getUserByID = function (request, reply) {
     //Finding user for particular userID
     UserModel.find({_id: request.params.id}, function (error, data) {
+        if (data === 0) {
+            reply(Boom.notFound(error));
+        }
         if (error) {
-            reply({
-                statusCode: 503,
-                message: 'Failed to get data',
-                data: error
-            });
+            reply(Boom.badRequest(error));
         } else {
-            if (data.length === 0) {
-                reply({
-                    statusCode: 200,
-                    message: 'User Not Found',
-                    data: data
-                });
+            if (UserModel.find === 0) {
+                reply(Boom.notFound(error));
             } else {
                 reply({
-                    statusCode: 200,
-                    message: 'User Data Successfully Fetched',
-                    data: data
+                    data:data
                 });
             }
         }
@@ -58,14 +46,11 @@ UserHandlers.createUser = function (request, reply) {
     // and pass callback methods to handle error
     user.save(function (error) {
         if (error) {
-            reply({
-                statusCode: 503,
-                message: error
-            });
+            reply(Boom.badRequest(error));
         } else {
             reply({
-                statusCode: 201,
-                message: 'User Saved Successfully'
+                user: user,
+                message: 'Has been added'
             });
         }
     });
@@ -75,15 +60,9 @@ UserHandlers.updateUserInfo = function (request, reply) {
     // `findOneAndUpdate` is a mongoose model methods to update a particular record.
     UserModel.findOneAndUpdate({_id: request.params.id}, request.payload, function (error, data) {
         if (error) {
-            reply({
-                statusCode: 503,
-                message: 'Failed to get data',
-                data: error
-            });
+            reply(Boom.badRequest(error));
         } else {
             reply({
-                statusCode: 200,
-                message: 'User Updated Successfully',
                 data: data
             });
         }
@@ -91,20 +70,15 @@ UserHandlers.updateUserInfo = function (request, reply) {
 };
 
 UserHandlers.deleteUserById = function (request, reply) {
-
     // `findOneAndRemove` is a mongoose methods to remove a particular record into database.
-    UserModel.findOneAndRemove({_id: request.params.id}, function (error) {
+    UserModel.findOneAndRemove({_id: request.params.id}, function (error, data) {
         if (error) {
-            reply({
-                statusCode: 503,
-                message: 'Error in removing User',
-                data: error
-            });
+            reply(Boom.badRequest(error));
         }
         else {
             reply({
-                statusCode: 200,
-                message: 'User Deleted Successfully'
+                data: data,
+                message: 'Has been removed',
             });
         }
     });

@@ -23,7 +23,7 @@ lab.experiment('Users rest api test', function () {
         server.inject(options, function(response) {
             let result = response.result;
             Code.expect(response.statusCode).to.equal(200);
-            Code.expect(result).to.have.length(3);
+            Code.expect(result.data).to.have.length(3);
             done();
         });
     });
