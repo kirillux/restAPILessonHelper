@@ -4,7 +4,9 @@
 'use strict';
 const Joi = new require('joi');
 const userHandlers = require('./user-handlers');
-module.exports = [
+const authHandler = require('../auth/user-auth');
+
+const userRoutes = [
     {
         method: 'GET',
         path: '/api/user',
@@ -90,5 +92,33 @@ module.exports = [
                 }
             }
         }
-    }
+    },
+
+
+    //Authentication login
+    {
+        method: 'POST',
+        path: '/api/user/login',
+        handler: authHandler.login,
+        config: {
+            // "tags" enable swagger to document API
+            tags: ['api'],
+            description: 'Login user',
+            notes: 'Login user',
+            // We use Joi plugin to validate request
+            validate: {
+                payload: {
+                    // Both name and age are required fields
+                    id: Joi.string().required(),
+                    password: Joi.string().min(6).max(15).required()
+                }
+            }
+        }
+    },
+
+
+
+
 ];
+
+module.exports = userRoutes;

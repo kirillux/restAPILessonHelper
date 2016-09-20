@@ -18,57 +18,66 @@ server.connection({
     host: 'localhost',
     port: 3000
 });
-const options = {
+const optionsSwagger = {
     info: {
         'title': 'Test API Documentation',
         'version': '16.5.0'
     }
 };
-//Server start + console Good plugin + pluginss
+
+const optionsGood = {
+    ops: {
+        interval: 1000
+    },
+    reporters: {
+        myConsoleReporter: [{
+            module: 'good-squeeze',
+            name: 'Squeeze',
+            args: [{ log: '*', response: '*' }]
+        }, {
+            module: 'good-console'
+        }, 'stdout'],
+        myFileReporter: [{
+            module: 'good-squeeze',
+            name: 'Squeeze',
+            args: [{ ops: '*' }]
+        }, {
+            module: 'good-squeeze',
+            name: 'SafeJson'
+        },]}
+};
+
+//Server start + console Good plugin + plugins
 server.register([
-    Inert,
-    Vision,
+    {
+        register: Inert
+    },
+    {
+        register: Vision
+    },
     {
         register: HapiSwagger,
-        options: options
+        options: optionsSwagger
     },
     {
         register: Good,
-        options: {
-            reporters: {
-                console: [{
-                    module: 'good-squeeze',
-                    name: 'Squeeze',
-                    args: [{
-                        response: '*',
-                        log: '*'
-                    }]
-                }, {
-                    module: 'good-console'
-                }, 'stdout']
-            }
-        }
+        options: optionsGood
     },
     {
         register: require('./app/user/index'),
-        options: {}
     },
     {
         register: require('./app/vak/index'),
-        options: {}
-    }
-], (err) => {
-    if (err) {
-        console.error('Failed to load a plugin:', err);
-    }
-});
+    }], (err) => {
 
-server.start( (err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('Server running at:', server.info.uri);
-    }
-});
+        if (err) {
+            return console.error(err);
+        }
+        server.start(() => {
+            console.info(`Server started at ${ server.info.uri }`);
+        });
+
+    });
+
 module.exports = server;
 

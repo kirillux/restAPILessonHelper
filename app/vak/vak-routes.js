@@ -5,8 +5,7 @@
 const Joi = new require('joi');
 const vakHandlers = require('./vak-handlers');
 
-
-module.exports = [
+const vakRoutes = [
     {
         method: 'GET',
         path: '/api/vak',
@@ -78,4 +77,5 @@ module.exports = [
     }
 
 ];
+module.exports = vakRoutes;
 
