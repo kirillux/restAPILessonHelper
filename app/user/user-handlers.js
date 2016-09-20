@@ -4,6 +4,7 @@
 'use strict';
 const Boom = require('boom');
 const UserModel = new require('../models/user');
+
 const UserHandlers = {};
 
 UserHandlers.getUsers = function(request, reply) {
