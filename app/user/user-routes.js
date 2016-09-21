@@ -93,8 +93,6 @@ const userRoutes = [
             }
         }
     },
-
-
     //Authentication login
     {
         method: 'POST',
@@ -115,9 +113,6 @@ const userRoutes = [
             }
         }
     },
-
-
-
 
 ];
 
