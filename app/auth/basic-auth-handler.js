@@ -17,7 +17,6 @@ authHandler.authValidate = function (request, username, password, callback) {
             callback(err, isValid, { _id: data[0]._id, name: data[0].username, scope: data[0].scope });
         });
     });
-
 };
 
 module.exports = authHandler;

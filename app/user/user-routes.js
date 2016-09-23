@@ -85,7 +85,6 @@ const userRoutes = [
         handler: userHandlers.deleteUserById,
         config: {
             auth:{
-                strategy:'simple',
                 scope: ['admin']},
             tags: ['api'],
             description: 'Remove specific user data',
@@ -101,20 +100,26 @@ const userRoutes = [
         method: 'GET',
         path: '/login',
         config: {
-            auth:'simple',
             handler: function (request, reply) {
                 reply('hello, ' + request.auth.credentials.name + request.auth.credentials.scope);
             }
         }
     },
     {
-
         method: 'GET',
         path: '/logout',
         handler: function (request, reply) {
+                reply('You are logged out now').code(401);
+            },
+        config:{
+            auth: {
+                strategy: 'simple',
+                mode: 'optional'
+            }
 
-            reply('You are logged out now').code(401);
+
         }
+
     }
 
 

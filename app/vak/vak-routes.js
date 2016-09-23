@@ -59,7 +59,6 @@ const vakRoutes = [
             }
         }
     },
-
     {
         method: 'DELETE',
         path: '/api/vak/{id}',
