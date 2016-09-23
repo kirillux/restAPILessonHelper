@@ -6,11 +6,11 @@ const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
-
 let userSchema = new Schema({
     email: String,
     username: {type: String, unique: true},
     password: String,
+    scope: { type : Array , default : [] },
     created: { type: Date, default: Date.now }
 
 });
@@ -25,12 +25,5 @@ userSchema.pre('save', function(next) {
         next();
     });
 });
-
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-};
 
 module.exports = Mongoose.model('User', userSchema, 'User');

@@ -4,7 +4,6 @@
 'use strict';
 const Joi = new require('joi');
 const userHandlers = require('./user-handlers');
-const authHandler = require('../auth/user-auth');
 
 const userRoutes = [
     {
@@ -49,8 +48,10 @@ const userRoutes = [
                 payload: {
                     // Both name and age are required fields
                     email: Joi.string().email(),
-                    username: Joi.string().alphanum().min(3).max(15).optional(),
-                    password: Joi.string().min(6).max(15).required()
+                    username: Joi.string().alphanum().min(3).max(15).required(),
+                    password: Joi.string().min(6).max(15).required(),
+                    scope: Joi.any().valid(['admin', 'user'])
+
                 }
             }
         }
@@ -83,6 +84,9 @@ const userRoutes = [
         path: '/api/user/{id}',
         handler: userHandlers.deleteUserById,
         config: {
+            auth:{
+                strategy:'simple',
+                scope: ['admin']},
             tags: ['api'],
             description: 'Remove specific user data',
             notes: 'Remove specific user data',
@@ -93,26 +97,26 @@ const userRoutes = [
             }
         }
     },
-    //Authentication login
-    {
-        method: 'POST',
-        path: '/api/user/login',
-        handler: authHandler.login,
+ {
+        method: 'GET',
+        path: '/login',
         config: {
-            // "tags" enable swagger to document API
-            tags: ['api'],
-            description: 'Login user',
-            notes: 'Login user',
-            // We use Joi plugin to validate request
-            validate: {
-                payload: {
-                    // Both name and age are required fields
-                    id: Joi.string().required(),
-                    password: Joi.string().min(6).max(15).required()
-                }
+            auth:'simple',
+            handler: function (request, reply) {
+                reply('hello, ' + request.auth.credentials.name + request.auth.credentials.scope);
             }
         }
     },
+    {
+
+        method: 'GET',
+        path: '/logout',
+        handler: function (request, reply) {
+
+            reply('You are logged out now').code(401);
+        }
+    }
+
 
 ];
 

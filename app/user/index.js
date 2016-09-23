@@ -10,7 +10,6 @@ userApi.register = function (server,options,next) {
     server.route(routes);
     next();
 };
-
 userApi.register.attributes =
 {
     name: 'UserApi',
