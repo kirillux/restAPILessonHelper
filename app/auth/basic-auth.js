@@ -21,7 +21,6 @@ basicAuth.register = function(server,options,next) {
             strategy: 'simple',
             scope: ['admin','user'],
         });
-
         next();
     });
 };

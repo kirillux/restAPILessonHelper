@@ -6,8 +6,10 @@ const userApi = {};
 
 userApi.register = function (server,options,next) {
     //Implement routes
-    const routes = require('./user-routes');
-    server.route(routes);
+    const userRoutes = require('./user-routes');
+    server.route(userRoutes);
+    const adminRoutes = require('./user-admin-routes');
+    server.route(adminRoutes);
     next();
 };
 userApi.register.attributes =

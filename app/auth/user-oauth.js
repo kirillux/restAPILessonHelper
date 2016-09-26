@@ -20,7 +20,7 @@ server.register([require('bell'),require('hapi-auth-cookie')], function (err) {
             method: ['GET', 'POST'],
             path: '/auth/github',
             config: {
-                auth: 'github-oauth', //<-- use our twitter strategy and let bell take over
+                auth: 'github-oauth', //<-- Github strategy
                 handler: function (request, reply) {
                     if (!request.auth.isAuthenticated) {
                         return reply(Boom.unauthorized('Authentication failed: ' + request.auth.error.message));

@@ -11,6 +11,7 @@ const Mongoose = require ('mongoose');
 const server = new Hapi.Server();
 
 //Connect 2 mongoose database
+Mongoose.Promise = global.Promise;
 Mongoose.connect('mongodb://adminhapi:admintest@ds029466.mlab.com:29466/lessonhelper');
 
 server.connection({
@@ -74,6 +75,9 @@ const optionsGood = {
         },
         {
             register: require('./app/vak/index'),
+        },
+        {
+            register: require('./app/Comments/index')
         }
     ], (err) => {
 

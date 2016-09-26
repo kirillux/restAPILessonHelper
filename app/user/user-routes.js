@@ -79,29 +79,12 @@ const userRoutes = [
             }
         }
     },
-    {
-        method: 'DELETE',
-        path: '/api/user/{id}',
-        handler: userHandlers.deleteUserById,
-        config: {
-            auth:{
-                scope: ['admin']},
-            tags: ['api'],
-            description: 'Remove specific user data',
-            notes: 'Remove specific user data',
-            validate: {
-                params: {
-                    id: Joi.string().required()
-                }
-            }
-        }
-    },
  {
         method: 'GET',
         path: '/login',
         config: {
             handler: function (request, reply) {
-                reply('hello, ' + request.auth.credentials.name + request.auth.credentials.scope);
+                reply('hello, ' + request.auth.credentials.name + 'Scope: ' + request.auth.credentials.scope);
             }
         }
     },
