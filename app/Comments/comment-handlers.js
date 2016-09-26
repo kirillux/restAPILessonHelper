@@ -6,12 +6,13 @@ const commentHandlers = {};
 const Boom = require('boom');
 
 commentHandlers.postComment = function (request, reply) {
+    //Find model by ID
     VakModel.findById({_id: request.params.id}, function (error, data) {
         console.log(request.payload);
         if (error) {
             reply(Boom.notFound(data));
         }
-        var postComment = new VakModel();
+        let postComment = new VakModel();
         postComment.comments.push(request.payload,{user: request.auth.credentials.name});
         postComment.save(function (err) {
             if (!err) console.log('Success!');
