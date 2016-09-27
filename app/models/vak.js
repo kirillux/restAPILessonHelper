@@ -4,19 +4,13 @@
 'use strict';
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
-
-//Berichten comments*
-let commentSchema = new Schema({
-    bericht: String,
-    date: { type: Date, default: Date.now },
-    user: String
-});
+const commentSchema = require('./comment');
 
 //Vakschema voor vakken
 let vakSchema = new Schema({
     vakname: String,
     vakLeraar: String, //id of user,
     vakBeschrijving: String,
-    comments:[commentSchema]
+    comments:[]
 });
 module.exports = Mongoose.model('Vak', vakSchema, 'Vak');

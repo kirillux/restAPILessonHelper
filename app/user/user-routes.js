@@ -84,7 +84,7 @@ const userRoutes = [
         path: '/login',
         config: {
             handler: function (request, reply) {
-                reply('hello, ' + request.auth.credentials.name + 'Scope: ' + request.auth.credentials.scope);
+                reply('hello, ' + request.auth.credentials.name + ' Scope: ' + request.auth.credentials.scope);
             }
         }
     },

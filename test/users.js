@@ -14,18 +14,34 @@ lab.experiment('test tutorial', function(){
     });
 });
 
-lab.experiment('Users rest api test', function () {
-    lab.test("main endpoint lists usernames on the network", function(done) {
-        let options = {
-            method: "GET",
-            url: "/api/user"
-        };
-        server.inject(options, function(response) {
-            let result = response.result;
-            Code.expect(response.statusCode).to.equal(200);
-            Code.expect(result.data).to.have.length(3);
-            done();
-        });
-    });
-});
+//lab.experiment('Users rest api test', function () {
+//    lab.test("main endpoint lists usernames on the network", function(done) {
+//        let options = {
+//            method: "GET",
+//            url: "/api/user"
+//        };
+//        server.inject(options, function(response) {
+//            let result = response.result;
+//            Code.expect(response.statusCode).to.equal(200);
+//            Code.expect(result.data).to.have.length(3);
+//            done();
+//        });
+//    });
+//});
+//
+//
+//lab.experiment('Test path with credentials', function () {
+//    lab.test("Endpoint login with", function(done) {
+//        let options = {
+//            method: "GET",
+//            url: "/login",
+//        };
+//        server.inject(options, function(response) {
+//            let result = response.result;
+//            Code.expect(response.statusCode).to.equal(401);
+//            Code.expect(result.data).to.have.length(3);
+//            done();
+//        });
+//    });
+//});
 
