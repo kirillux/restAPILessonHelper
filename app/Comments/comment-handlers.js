@@ -30,6 +30,5 @@ commentHandlers.postComment = function (request, reply) {
         });
     });
 };
-
 module.exports = commentHandlers;
 
