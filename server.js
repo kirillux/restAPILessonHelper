@@ -27,7 +27,7 @@ const optionsSwagger = {
         'version': '16.5.0'
     }
 };
-
+//Options for plugin good
 const optionsGood = {
     ops: {
         interval: 1000

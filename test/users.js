@@ -237,7 +237,8 @@ lab.experiment('Delete a non existent user as admin', function () {
 
 
 ////////////////////////////////////*********************User credentials*********************//////////////////////////
-
+//Test user id
+internals.testUserId = '57e5440cef828525f0292f79';
 //Auth header function with correct credentials
  internals.headerGoodLogin = function () {
      let username = '57e5440cef828525f0292f79';
@@ -259,11 +260,10 @@ internals.headerLoginOnlyPassword = function () {
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 };
 
+//Admin Login with good credentials
 internals.headerGoodLoginAdmin = function(){
     let username = '57e534e753070e1e98d829c9';
     let password = 'bacon';
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 
 };
-//Test user id
-internals.testUserId = '57e5440cef828525f0292f79';

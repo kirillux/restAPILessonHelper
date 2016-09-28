@@ -4,7 +4,6 @@
 const Joi = new require('joi');
 const userHandlers = require('./user-admin-handlers');
 const userAdminRoutes = [
-
     {
         method: 'DELETE',
         path: '/api/user/{id}',
