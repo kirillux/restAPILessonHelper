@@ -74,7 +74,7 @@ const userRoutes = [
                 payload: {
                     email: Joi.string().email(),
                     username: Joi.string().alphanum().min(3).max(10).optional(),
-                    password: Joi.string().min(3).max(10).required()
+                    password: Joi.string().min(6).max(15).required()
                 }
             }
         }

@@ -217,7 +217,7 @@ lab.experiment('Delete user while being a user', function () {
 
 //Delete nonexistent user as admin
 lab.experiment('Delete a non existent user as admin', function () {
-    lab.test('Delete a user that is non existend as an admin should give status 400',function(done){
+    lab.test('Delete a user that is nonexistent as an admin should give status 400',function(done){
         let options = {
             method: 'delete',
             url: '/api/user/x',
@@ -234,21 +234,71 @@ lab.experiment('Delete a non existent user as admin', function () {
     });
 });
 
+//Put update credentials as a user with incorrect values
+lab.experiment('Update user credentials given a specific ID', function () {
+    lab.test('Update credentials with not allowed information',function(done){
+        let options = {
+            method: 'put',
+            url: '/api/user/{id}',
+            headers: {
+                authorization: internals.headerGoodLogin()
+            },
+            payload: {
+                email: '',
+                username: '',
+                password: '',
+            }
+        };
+        server.inject(options, function(response) {
+            let result = response.result;
+            Code.expect(response.statusCode).to.equal(400);
+            Code.expect(result.data);
+            done();
+        });
+    });
+});
+
+//Put update credentials as a user with correct values
+lab.experiment('Update user credentials given a specific ID', function () {
+    lab.test('Update credentials with correct values',function(done){
+        let options = {
+            method: 'put',
+            url: '/api/user/57e5440cef828525f0292f79',
+            headers: {
+                authorization: internals.headerGoodLogin()
+            },
+            payload: {
+                email: 'string@string.nl',
+                username: 'stringLab',
+                password:'string'
+            }
+        };
+        server.inject(options, function(response) {
+            let result = response.result;
+            Code.expect(response.statusCode).to.equal(200);
+            Code.expect(result.data);
+            done();
+        });
+    });
+});
+
+
+
 
 
 ////////////////////////////////////*********************User credentials*********************//////////////////////////
 //Test user id
-internals.testUserId = '57e5440cef828525f0292f79';
+internals.testUserId = '57ebde2e3650341a98398322';
 //Auth header function with correct credentials
  internals.headerGoodLogin = function () {
-     let username = '57e5440cef828525f0292f79';
+     let username = '57ebde2e3650341a98398322';
      let password = 'bacon';
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 };
 
 //Only username login
 internals.headerLoginOnlyUserName = function () {
-    let username = '57e5440cef828525f0292f79';
+    let username = '57ebde2e3650341a98398322';
     let password = '';
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 };

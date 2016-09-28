@@ -7,11 +7,13 @@ const UserModel = new require('../models/user');
 
 const UserHandlers = {};
 
+//Find returns [], findByOne returns (object) als niets gevonden null
+
 UserHandlers.getUsers = function(request, reply) {
     //Fetch all data from mongodb User Collection
     UserModel.find({}, function (error, data) {
-        if (error) {
-            reply(Boom.notFound(error));
+        if (error && data === undefined) {
+            reply(Boom.notFound(error, data));
         } else {
             reply({
                 data:data
@@ -23,20 +25,16 @@ UserHandlers.getUsers = function(request, reply) {
 UserHandlers.getUserByID = function (request, reply) {
     //Finding user for particular userID
     UserModel.find({_id: request.params.id}, function (error, data) {
-        if (data === 0) {
-            reply(Boom.notFound(error));
+        if (error && data === undefined) {
+            reply(Boom.badRequest(error,data));
         }
-        if (error) {
-            reply(Boom.badRequest(error));
-        } else {
-            if (UserModel.find === 0) {
-                reply(Boom.notFound(error));
-            } else {
-                reply({
-                    data:data
-                });
+        else if (!data.length){
+                reply(Boom.notFound(error,data));
             }
+        else {
+            reply({data: data});
         }
+
     });
 };
 
@@ -45,14 +43,11 @@ UserHandlers.createUser = function (request, reply) {
     var user = new UserModel(request.payload);
     // Call save methods to save data into database
     // and pass callback methods to handle error
-    user.save(function (error) {
+    user.save(function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
         } else {
-            reply({
-                user: user,
-                message: 'Has been added'
-            });
+            reply({data: data});
         }
     });
 };
