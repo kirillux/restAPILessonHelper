@@ -12,7 +12,7 @@ commentApi.register = function (server,options,next) {
 };
 commentApi.register.attributes =
 {
-    name: 'CommentApi',
+    name: 'commentApi',
     version:'1.0.0'
 };
 module.exports = commentApi;
