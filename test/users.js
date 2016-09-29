@@ -312,7 +312,7 @@ internals.headerLoginOnlyPassword = function () {
 
 //Admin Login with good credentials
 internals.headerGoodLoginAdmin = function(){
-    let username = '57e534e753070e1e98d829c9';
+    let username = '57ecd72a7c343a1c281c1bcb';
     let password = 'bacon';
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 

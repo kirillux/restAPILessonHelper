@@ -23,7 +23,6 @@ commentHandlers.postComment = function (request, reply) {
         data.save(function (saveError) {
             if(saveError)
             {
-
                 reply(Boom.badRequest(saveError,data));
             }
             reply(data);
