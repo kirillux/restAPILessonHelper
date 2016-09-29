@@ -79,10 +79,10 @@ const optionsGood = {
         {
             register: require('./app/Comments/index')
         }
-    ], (err) => {
+    ], (error) => {
 
-        if (err) {
-            return console.error(err);
+        if (error) {
+            return console.error(error);
         }
         server.start(() => {
             console.info(`Server started at ${ server.info.uri }`);
