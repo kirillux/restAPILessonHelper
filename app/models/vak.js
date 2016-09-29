@@ -4,7 +4,6 @@
 'use strict';
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
-const commentSchema = require('./comment');
 
 //Vakschema voor vakken
 let vakSchema = new Schema({

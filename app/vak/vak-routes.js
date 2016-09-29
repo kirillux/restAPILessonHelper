@@ -18,6 +18,24 @@ const vakRoutes = [
         }
     },
     {
+        method: 'GET',
+        path: '/api/vak/{id}',
+        handler: vakHandlers.getVakById,
+        config: {
+            // Swagger documentation fields tags, description, note
+            tags: ['api'],
+            description: 'Get vak by ID',
+            notes: 'Get vak by ID',
+            // Joi api validation
+            validate: {
+                params: {
+                    //`id` is required field and can only accept string data
+                    id: Joi.string().required()
+                }
+            }
+        }
+    },
+    {
         method: 'POST',
         path: '/api/vak',
         handler: vakHandlers.createVak,

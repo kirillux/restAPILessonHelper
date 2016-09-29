@@ -14,19 +14,24 @@ commentHandlers.postComment = function (request, reply) {
     //Find model by ID
     VakModel.findById({_id: request.params.id}, function (error, data) {
         if (error) {
-            reply(Boom.notFound(data));
+            reply(Boom.badRequest(error));
         }
-        //Invullen van data in het nieuwe comment model
-        let comment = new CommentModel({bericht: request.payload.bericht,user: request.auth.credentials._id});
-        //Push comment data in het data model van VakModel found by id
-        data.comments.push(comment);
-        data.save(function (saveError) {
-            if(saveError)
-            {
-                reply(Boom.badRequest(saveError,data));
-            }
-            reply(data);
-        });
+        else if (data === null) {
+            reply(Boom.notFound(error));
+        }
+        else if (!error && data !== null) {
+            //Invullen van data in het nieuwe comment model
+            let comment = new CommentModel({bericht: request.payload.bericht, user: request.auth.credentials._id});
+            //Push comment data in het data model van VakModel found by id
+            data.comments.push(comment);
+            data.save(function (error) {
+                if (error) {
+                    reply(Boom.badRequest(error));
+                }
+                reply(data);
+            });
+        }
+
     });
 };
 module.exports = commentHandlers;

@@ -19,8 +19,8 @@ userSchema.pre('save', function(next) {
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next();
     // generate auto salt and hash
-    bcrypt.hash('bacon', 8, function(err, hash) {
-        if (err) return next(err);
+    bcrypt.hash('bacon', 8, function(error, hash) {
+        if (error) return next(error);
         user.password = hash;
         next();
     });

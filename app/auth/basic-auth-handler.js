@@ -12,9 +12,9 @@ authHandler.authValidate = function (request, username, password, callback) {
     {
         return callback(null, false);
     }
-    UserModel.find({_id: username}, function (error, data) {
-        Bcrypt.compare(password, data[0].password, (err, isValid) => {
-            callback(err, isValid, { _id: data[0]._id, name: data[0].username, scope: data[0].scope });
+    UserModel.findById({_id: username}, function (error, data) {
+        Bcrypt.compare(password, data.password, (err, isValid) => {
+            callback(err, isValid, { _id: data._id, name: data.username, scope: data.scope });
         });
     });
 };

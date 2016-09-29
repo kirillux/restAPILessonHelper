@@ -6,20 +6,20 @@
 const Basic = require('hapi-auth-basic');
 const basicAuth = {};
 
-basicAuth.register = function(server,options,next) {
+basicAuth.register = function (server, options, next) {
 
-    server.register(Basic, (err) => {
-        if (err) {
-            throw err;
+    server.register(Basic, (error) => {
+        if (error) {
+            throw error;
         }
         const authFunction = require('./basic-auth-handler');
-        server.auth.strategy('simple','basic', {
+        server.auth.strategy('simple', 'basic', {
             validateFunc: authFunction.authValidate,
         });
         //Setup default
         server.auth.default({
             strategy: 'simple',
-            scope: ['admin','user'],
+            scope: ['admin', 'user']
         });
         next();
     });

@@ -6,28 +6,46 @@ const VakModel = new require('../models/vak');
 const VakHandlers = {};
 const Boom = require('boom');
 
-VakHandlers.getVakken = function(request, reply) {
+VakHandlers.getVakken = function (request, reply) {
     //Fetch all data from mongodb User Collection
     VakModel.find({}, function (error, data) {
-        if (error) {
+        if (error && data === undefined) {
+            reply(Boom.badRequest(error));
+        } else if (!data.length) {
             reply(Boom.notFound(error));
         } else {
-            reply({data});
+            reply({data: data})
+        }
+    });
+};
+
+VakHandlers.getVakById = function (request, reply) {
+    VakModel.findById({_id: request.params.id}, function (error, data) {
+        if (error) {
+            reply(Boom.badRequest(error));
+        } else if (data === null) {
+            reply(Boom.notFound(error));
+        } else {
+            reply({data: data});
         }
     });
 };
 
 VakHandlers.updateVakInfo = function (request, reply) {
     // `findOneAndUpdate` is a mongoose model methods to update a particular record.
-    VakModel.findOneAndUpdate({_id: request.params.id}, request.payload, function (error, data) {
+    VakModel.findByIdAndUpdate({_id: request.params.id}, request.payload, function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
-        } else {
+        } else if (data === null) {
+            reply(Boom.notFound(error));
+        }
+        else {
             reply({
                 data: data,
-                message: 'Has been updated'
+                message: 'Vak name has been updated'
             });
         }
+
     });
 };
 
@@ -36,7 +54,7 @@ VakHandlers.createVak = function (request, reply) {
     var vak = new VakModel(request.payload);
     // Call save methods to save data into database
     // and pass callback methods to handle error
-    vak.save(function (error) {
+    vak.save(function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
         } else {
@@ -50,9 +68,11 @@ VakHandlers.createVak = function (request, reply) {
 
 VakHandlers.deleteVakById = function (request, reply) {
     // `findOneAndRemove` is a mongoose methods to remove a particular record into database.
-    VakModel.findOneAndRemove({_id: request.params.id}, function (error) {
+    VakModel.findByIdAndRemove({_id: request.params.id}, function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
+        } else if (data === null) {
+            reply(Boom.notFound(error));
         }
         else {
             reply({

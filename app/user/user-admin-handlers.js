@@ -7,15 +7,16 @@ const UserModel = new require('../models/user');
 const UserAdminHandlers = {};
 
 UserAdminHandlers.deleteUserById = function (request, reply) {
-    // `findOneAndRemove` is a mongoose methods to remove a particular record into database.
-    UserModel.findOneAndRemove({_id: request.params.id}, function (error, data) {
+    UserModel.findByIdAndRemove({_id: request.params.id}, function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
+        } else if (data === null) {
+            reply(Boom.notFound(error, data));
         }
         else {
             reply({
                 data: data,
-                message: 'Has been removed',
+                message: 'Has been removed'
             });
         }
     });
