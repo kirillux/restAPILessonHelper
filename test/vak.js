@@ -10,6 +10,8 @@ const internals = {};
 internals.existentVakIdUrl = '/api/vak/57dbdf11a744ce19d8c195ab';
 //Valid vak id that does not exists
 internals.nonExistentVakIdUrlValid = '/api/vak/57dbdf11a744ce19d8c195aa';
+
+internals.existentVakIdUrlComment = '/api/vak/57dbdf11a744ce19d8c195ab/comment'
 ////////////////***************************************** Setup User credentials ***********************//////////////////////////////
 
 //Test user correct credentials
@@ -126,7 +128,7 @@ lab.experiment('get vak ID existent and valid', function () {
     });
 });
 
-//Put vak name
+//Put vak name correct values
 lab.experiment('Change vak name with a correct value', function () {
     lab.test('Change vak name with a correct value should give 200', function (done) {
         let options = {
@@ -148,7 +150,7 @@ lab.experiment('Change vak name with a correct value', function () {
     });
 });
 
-//Put vak name
+//Put vak name incorrect value
 lab.experiment('Change vak name with an incorrect value', function () {
     lab.test('Change vak name with a incorrect value should give 400', function (done) {
         let options = {
@@ -164,6 +166,50 @@ lab.experiment('Change vak name with an incorrect value', function () {
         server.inject(options, function (response) {
             let result = response.result;
             Code.expect(response.statusCode).to.equal(400);
+            Code.expect(result.data);
+            done();
+        });
+    });
+});
+
+//Post comment @ given and existent vakID with no value
+lab.experiment('Post a comment @vak with correct ID but an empty comment', function () {
+    lab.test('Post comment with no value should give 400', function (done) {
+        let options = {
+            method: 'post',
+            url: internals.existentVakIdUrlComment,
+            headers: {
+                authorization: internals.headerGoodLogin()
+            },
+            payload: {
+                bericht: ''
+            }
+        };
+        server.inject(options, function (response) {
+            let result = response.result;
+            Code.expect(response.statusCode).to.equal(400);
+            Code.expect(result.data);
+            done();
+        });
+    });
+});
+
+//Post comment @ given and existent vakID with no value
+lab.experiment('Post a comment @vak with correct ID and a good value', function () {
+    lab.test('Post comment with with value should give 200', function (done) {
+        let options = {
+            method: 'post',
+            url: internals.existentVakIdUrlComment,
+            headers: {
+                authorization: internals.headerGoodLogin()
+            },
+            payload: {
+                bericht: 'Hallo test lab'
+            }
+        };
+        server.inject(options, function (response) {
+            let result = response.result;
+            Code.expect(response.statusCode).to.equal(200);
             Code.expect(result.data);
             done();
         });
