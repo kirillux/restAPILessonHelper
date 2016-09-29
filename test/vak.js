@@ -126,7 +126,6 @@ lab.experiment('get vak ID existent and valid', function () {
     });
 });
 
-
 //Put vak name
 lab.experiment('Change vak name with a correct value', function () {
     lab.test('Change vak name with a correct value should give 200', function (done) {
