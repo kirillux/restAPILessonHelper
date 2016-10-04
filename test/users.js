@@ -10,7 +10,7 @@ const internals = {};
 
 ////////////////***************************************** Setup values ***********************//////////////////////////////
 internals.testUserId = '57ebde2e3650341a98398322';
-internals.testUdersIdAdmin = '57ecd72a7c343a1c281c1bcb';
+internals.testUserIdAdmin = '57ecd72a7c343a1c281c1bcb';
 internals.goodPasswordAll = 'bacon';
 internals.goodUrlUserId = '/api/user/57e5440cef828525f0292f79';
 ////////////////***************************************** Start Tests functions ***********************//////////////////////////////
@@ -314,7 +314,7 @@ internals.headerLoginOnlyPassword = function () {
 
 //Admin Login with good credentials
 internals.headerGoodLoginAdmin = function () {
-    let username = internals.testUdersIdAdmin;
+    let username = internals.testUserIdAdmin;
     let password = internals.goodPasswordAll;
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 

@@ -10,13 +10,12 @@ const internals = {};
 internals.existentVakIdUrl = '/api/vak/57dbdf11a744ce19d8c195ab';
 //Valid vak id that does not exists
 internals.nonExistentVakIdUrlValid = '/api/vak/57dbdf11a744ce19d8c195aa';
-
 internals.existentVakIdUrlComment = '/api/vak/57dbdf11a744ce19d8c195ab/comment'
 ////////////////***************************************** Setup User credentials ***********************//////////////////////////////
 
 //Test user correct credentials
 internals.testUserId = '57ebde2e3650341a98398322';
-internals.testUdersIdAdmin = '57ecd72a7c343a1c281c1bcb';
+internals.testUserIdAdmin = '57ecd72a7c343a1c281c1bcb';
 internals.goodPasswordAll = 'bacon';
 ////////////////***************************************** Start Tests functions***********************///////////////////////////
 
@@ -239,7 +238,7 @@ internals.headerLoginOnlyPassword = function () {
 
 //Admin Login with good credentials
 internals.headerGoodLoginAdmin = function () {
-    let username = internals.testUdersIdAdmin;
+    let username = internals.testUserIdAdmin;
     let password = internals.goodPasswordAll;
     return 'Basic ' + (new Buffer(username + ':' + password, 'utf8')).toString('base64');
 

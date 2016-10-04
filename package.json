@@ -18,6 +18,7 @@
     "bell": "^8.2.0",
     "boom": "^4.0.0",
     "code": "^3.0.2",
+    "fs": "0.0.1-security",
     "good": "^7.0.2",
     "good-console": "^6.1.2",
     "good-squeeze": "^4.0.0",
@@ -30,6 +31,8 @@
     "joi": "^9.0.4",
     "lab": "^11.0.1",
     "mongoose": "^4.6.0",
+    "multiparty": "^4.1.2",
+    "path": "^0.12.7",
     "require-hapiroutes": "^0.1.9",
     "vision": "^4.1.0"
   },

@@ -5,14 +5,25 @@ const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
 const Good = require('good');
 const Basic = require('hapi-auth-basic');
+const Path = require('path');
+const fs = require('fs');
 
 //mongoose ORM
 const Mongoose = require ('mongoose');
-const server = new Hapi.Server();
+const server = new Hapi.Server({
+    connections: {
+        routes: {
+            files: {
+                relativeTo: Path.join(__dirname, 'public')
+            }
+        }
+    }
+});
 
 //Connect 2 mongoose database
 Mongoose.Promise = global.Promise;
 Mongoose.connect('mongodb://adminhapi:admintest@ds029466.mlab.com:29466/lessonhelper');
+
 
 server.connection({
     host: 'localhost',
@@ -71,13 +82,17 @@ const optionsGood = {
             options: optionsGood
         },
         {
-            register: require('./app/user/index'),
+            register: require('./app/user/index')
         },
         {
-            register: require('./app/vak/index'),
+            register: require('./app/vak/index')
         },
         {
             register: require('./app/Comments/index')
+        }
+        ,
+        {
+            register: require('./app/updownloadfile/index')
         }
     ], (error) => {
 
