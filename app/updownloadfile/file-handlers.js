@@ -9,15 +9,15 @@ const fileHandler = {};
 fileHandler.uploadFile = function (file, reply) {
     const uploadPath = __dirname + '/../../public/uploads/'
 
-    fs.readFile(file.file[0].path, function (error, data) {
-        fs.writeFile(uploadPath + file.file[0].originalFilename, data, function (error) {
+    fs.readFile(file.path, function (error, data) {
+        fs.writeFile(uploadPath + file.originalFilename, data, function (error) {
             console.log(uploadPath)
             if (error) {
                 reply(error);
             }
 
             else {
-                reply('File uploaded to:' + uploadPath + file.file[0].originalFilename);
+                reply('File uploaded to:' + uploadPath + file.originalFilename);
             }
         });
     });

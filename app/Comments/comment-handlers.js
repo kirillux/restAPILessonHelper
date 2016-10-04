@@ -5,7 +5,6 @@ const VakModel = new require('../models/vak');
 const CommentModel = require('../models/comment');
 const commentHandlers = {};
 const Boom = require('boom');
-
 //Ophalen vak van een vak met een id
 //Met VakId en het bijbehorende schema moet een comment worden geplaatst bij de comment sectie van het vak
 //Bericht met commentmodel pushen, plaatsen in het vak comment section

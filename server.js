@@ -19,16 +19,16 @@ const server = new Hapi.Server({
         }
     }
 });
-
 //Connect 2 mongoose database
 Mongoose.Promise = global.Promise;
 Mongoose.connect('mongodb://adminhapi:admintest@ds029466.mlab.com:29466/lessonhelper');
 
-
+//Hapi server connection API
 server.connection({
     host: 'localhost',
     port: 3000
 });
+
 
 module.exports = server;
 
@@ -93,12 +93,17 @@ const optionsGood = {
         ,
         {
             register: require('./app/updownloadfile/index')
+        },
+        {
+            register: require('./app/realtimeComments/index')
         }
+
     ], (error) => {
 
         if (error) {
             return console.error(error);
         }
+
         server.start(() => {
             console.info(`Server started at ${ server.info.uri }`);
         });

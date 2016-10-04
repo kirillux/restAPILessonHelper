@@ -5,6 +5,7 @@
 const fileHandler = require('./file-handlers');
 const fs = require('fs');
 const multiparty = require('multiparty');
+const Path = require('path');
 
 const fileRoutes = [
     {
@@ -12,8 +13,11 @@ const fileRoutes = [
         path: '/files/upload',
         handler: {
             file: 'updownloadview.html'
+
         },
         config: {
+            auth:{
+                scope: ['admin']},
             // Swagger documentation fields tags, description, note
             tags: ['api'],
             description: 'Server upload html file',
@@ -30,20 +34,20 @@ const fileRoutes = [
                     return reply(error);
                 }
                 else {
-                    fileHandler.uploadFile(file, reply);
+                    fileHandler.uploadFile(file.file[0], reply);
                 }
             });
         },
         config: {
+            auth:{
+                scope: ['admin']},
             tags: ['api'],
             payload: {
                 maxBytes: 209715200,
                 output: 'stream',
                 parse: false
             },
-
         }
-
     },
     {
         method: 'GET',
