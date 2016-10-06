@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Comment chat Hapi</title>
+    <title>Comments Hapi</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font: 13px Helvetica, Arial; }
@@ -15,9 +15,6 @@
 </head>
 <body>
 <ul id="messages"></ul>
-<form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-</form>
 
 <div id="comments"></div>
 <script src="/socket.io/socket.io.js"></script>
@@ -25,11 +22,11 @@
 <script>
     var socket = io('http://localhost:3000');
     $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+        socket.emit('comment message', $('#m').val());
         $('#m').val('');
         return false;
     });
-    socket.on('chat message', function(msg){
+    socket.on('comment message', function(msg){
         $('#messages').append($('<li>').text(msg));
     });
 

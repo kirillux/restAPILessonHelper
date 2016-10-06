@@ -10,26 +10,29 @@ socketService.init = function (listener) {
     // else do nothing
     let server = new Server(listener, {});
     server.on('connection', function (socket) {
-        for (let key in sockets) {
+
+        for (key in sockets) {
             console.log(key);
             socketService.send("Connected user: " + socket.id, key);
         };
-        sockets[socket.id] = socket;
-        socket.on('disconnect', function () {
 
+        sockets[socket.id] = socket;
+
+        socket.on('disconnect', function () {
             socketService.disconnect(socket.id);
 
         });
+
     });
 };
 
 socketService.send = function (message, socketId) {
-    sockets[socketId].emit('chat message', message);
+    sockets[socketId].emit('comment message', message);
 };
 
 socketService.sendAll = function (message) {
     for (let key in sockets) {
-        sockets[key].emit('chat message', message);
+        sockets[key].emit('comment message', message);
     }
 };
 socketService.disconnect = function (id) {
@@ -38,6 +41,6 @@ socketService.disconnect = function (id) {
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 module.exports = socketService;
