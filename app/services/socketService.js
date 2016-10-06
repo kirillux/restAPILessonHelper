@@ -35,8 +35,8 @@ socketService.sendAll = function (message) {
 socketService.disconnect = function (id) {
     try {
         delete sockets[id];
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
