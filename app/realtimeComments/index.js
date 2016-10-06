@@ -3,15 +3,12 @@
  */
 const commentSocket = {};
 const commentSocketRoutes = require('./realtimeComment-routes');
-const handlers = require('../Comments/comment-handlers');
 const socketService = require('../services/socketService');
 
 commentSocket.register = function (server, options, next) {
     //Initialize routes
     server.route(commentSocketRoutes);
-
     socketService.init(server.select('api').listener);
-
     next();
 
 };

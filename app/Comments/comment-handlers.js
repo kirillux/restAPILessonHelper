@@ -6,7 +6,7 @@ const VakModel = require('../models/vak');
 const CommentModel = require('../models/comment');
 const commentHandlers = {};
 const Boom = require('boom');
-//const io = require('socket.io')(3000);
+const socketService = require('../services/socketService');
 
 //Ophalen vak van een vak met een id
 //Met VakId en het bijbehorende schema moet een comment worden geplaatst bij de comment sectie van het vak
@@ -30,7 +30,7 @@ commentHandlers.postComment = function (request, reply) {
                 if (error) {
                     reply(Boom.badRequest(error));
                 }
-                //io.emit('chat message', JSON.stringify({bericht: request.payload.bericht, user: request.auth.credentials._id }))
+                socketService.sendAll(JSON.stringify('bericht:' + comment.bericht + ' geplaatst door user: ' + comment.user));
                 reply(data);
             });
         }
