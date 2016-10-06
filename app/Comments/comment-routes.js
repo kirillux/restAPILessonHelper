@@ -24,10 +24,12 @@ const commentRoutes =[
                 },
                 payload: {
                     bericht: Joi.string().min(3).required(),
+
                 }
             }
         }
-    }
+    },
+
 ];
 
 module.exports = commentRoutes;

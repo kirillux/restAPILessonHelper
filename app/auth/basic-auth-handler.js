@@ -12,6 +12,7 @@ authHandler.authValidate = function (request, username, password, callback) {
     {
         return callback(null, false);
     }
+
     UserModel.findById({_id: username}, function (error, data) {
         Bcrypt.compare(password, data.password, (err, isValid) => {
             callback(err, isValid, { _id: data._id, name: data.username, scope: data.scope });

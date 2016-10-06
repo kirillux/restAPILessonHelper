@@ -3,30 +3,15 @@
  */
 const commentSocket = {};
 const commentSocketRoutes = require('./realtimeComment-routes');
+const handlers = require('../Comments/comment-handlers');
+const socketService = require('../services/socketService');
 
 commentSocket.register = function (server, options, next) {
     //Initialize routes
     server.route(commentSocketRoutes);
-    //Setup listener
-    let io = require('socket.io')(server.listener);
 
-    io.on('connection', function (socket) {
-        console.log('a user connected');
-        console.log(io.engine.clientsCount);
+    socketService.init(server.select('api').listener);
 
-        io.emit('chat message', 'Welkom bij mijn chat server hier komen vette comments');
-        //Chat message
-        socket.on('chat message', function (msg) {
-            console.log('message: ' + msg);
-            io.emit('chat message', msg);
-
-        });
-        // on disconnect
-        socket.on('disconnect', function () {
-            console.log('user disconnected');
-            console.log(io.engine.clientsCount);
-        });
-    });
     next();
 
 };

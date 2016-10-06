@@ -91,16 +91,14 @@ const userRoutes = [
     {
         method: 'GET',
         path: '/logout',
-        handler: function (request, reply) {
+        config:{
+            handler: function (request, reply) {
                 reply('You are logged out now').code(401);
             },
-        config:{
             auth: {
                 strategy: 'simple',
                 mode: 'optional'
             }
-
-
         }
 
     }

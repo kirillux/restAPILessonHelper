@@ -1,10 +1,13 @@
 /**
  * Created by Kirill on 9/26/2016.
  */
-const VakModel = new require('../models/vak');
+
+const VakModel = require('../models/vak');
 const CommentModel = require('../models/comment');
 const commentHandlers = {};
 const Boom = require('boom');
+//const io = require('socket.io')(3000);
+
 //Ophalen vak van een vak met een id
 //Met VakId en het bijbehorende schema moet een comment worden geplaatst bij de comment sectie van het vak
 //Bericht met commentmodel pushen, plaatsen in het vak comment section
@@ -27,10 +30,10 @@ commentHandlers.postComment = function (request, reply) {
                 if (error) {
                     reply(Boom.badRequest(error));
                 }
+                //io.emit('chat message', JSON.stringify({bericht: request.payload.bericht, user: request.auth.credentials._id }))
                 reply(data);
             });
         }
-
     });
 };
 module.exports = commentHandlers;
