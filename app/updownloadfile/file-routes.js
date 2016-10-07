@@ -6,6 +6,7 @@ const fileHandler = require('./file-handlers');
 const fs = require('fs');
 const multiparty = require('multiparty');
 const Path = require('path');
+const Joi = require('joi');
 
 const fileRoutes = [
     {
@@ -60,11 +61,16 @@ const fileRoutes = [
     },
     {
         method: 'GET',
-        path: '/files/download/{file}',
+        path: '/files/download/{id}',
         handler: fileHandler.downloadFile,
         config: {
             // Swagger documentation fields tags, description, note
             tags: ['api'],
+            validate: {
+                params: {
+                    id: Joi.string().required()
+                }
+            }
         }
     }
 ];

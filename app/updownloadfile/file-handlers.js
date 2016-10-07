@@ -5,44 +5,54 @@
 const fs = require('fs');
 const Boom = require('boom');
 const fileHandler = {};
+const FileModel = new require('../models/file');
+
 
 fileHandler.uploadFile = function (file, reply) {
-    const uploadPath = __dirname + '/../../public/uploads/'
+    let storeFile = new FileModel;
+    storeFile.fileData = fs.readFileSync(file.path);
+    storeFile.fileName = file.originalFilename;
+    storeFile.contentType = file.headers['content-type'];
 
-    fs.readFile(file.path, function (error, data) {
-        fs.writeFile(uploadPath + file.originalFilename, data, function (error) {
-            console.log(uploadPath)
-            if (error) {
-                reply(error);
-            }
+    storeFile.save(function (error, data) {
+        if (error) {
+            reply(Boom.badRequest(error));
+        }
+        if (file.originalFilename.length === 0) {
+            reply(Boom.lengthRequired(error))
+        }
+        else {
+            reply({fileData: data});
+        }
 
-            else {
-                reply('File uploaded to:' + uploadPath + file.originalFilename);
-            }
-        });
     });
 };
 
 fileHandler.getFiles = function (request, reply) {
-    const path = __dirname + '/../../public/uploads/';
-    fs.readdir(path, function (error, items) {
-        if (items.length === 0) {
+    FileModel.find({}, function (error, data) {
+        if (error && data === undefined) {
+            reply(Boom.badRequest(error));
+        } else if (!data.length) {
             reply(Boom.notFound(error));
-        }
-        else {
-            reply(items);
+        } else {
+            reply({data: data});
         }
     });
+
 };
 
 fileHandler.downloadFile = function (request, reply) {
-    let file = request.params.file;
-    let path = __dirname + '/../../public/uploads/' + file;
-    if (file.length === 0) {
-        reply(Boom.notFound())
-    } else {
-        reply.file(path);
-    }
+
+    FileModel.findById({_id: request.params.id}, function (error, data) {
+        if (error) {
+            reply(Boom.badRequest(error));
+        } else if (data === null) {
+            reply(Boom.notFound(error));
+        } else {
+            reply(data.fileData).header('Content-disposition', 'attachment; filename=' + data.fileName).header('Content-Type', data.contentType);
+
+        }
+    });
 
 };
 

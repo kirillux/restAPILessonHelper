@@ -25,16 +25,10 @@ Mongoose.connect('mongodb://adminhapi:admintest@ds029466.mlab.com:29466/lessonhe
 
 //Hapi server connection API
 server.connection({
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3000,
     labels: 'api'
 });
-
-//server.connection({
-//    host:'localhost',
-//    port: 3001,
-//    labels: 'chat'
-//});
 
 
 module.exports = server;
