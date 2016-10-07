@@ -15,12 +15,9 @@ socketService.init = function (listener) {
             console.log(key);
             socketService.send("Connected user: " + socket.id, key);
         };
-
         sockets[socket.id] = socket;
-
         socket.on('disconnect', function () {
             socketService.disconnect(socket.id);
-
         });
 
     });

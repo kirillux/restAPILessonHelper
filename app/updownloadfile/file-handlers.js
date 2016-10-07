@@ -10,6 +10,8 @@ const FileModel = new require('../models/file');
 
 fileHandler.uploadFile = function (file, reply) {
     let storeFile = new FileModel;
+
+    //Use realFileSync!!! if not realFile is aSync and will do other stuff and some of the data is not known yet
     storeFile.fileData = fs.readFileSync(file.path);
     storeFile.fileName = file.originalFilename;
     storeFile.contentType = file.headers['content-type'];

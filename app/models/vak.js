@@ -10,6 +10,7 @@ let vakSchema = new Schema({
     vakname: String,
     vakLeraar: String, //id of user,
     vakBeschrijving: String,
-    comments:[]
+    comments:[],
+    files:[]
 });
 module.exports = Mongoose.model('Vak', vakSchema, 'Vak');
