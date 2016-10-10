@@ -3,5 +3,17 @@
  */
 const uploadService = {};
 
+uploadService.saveFile = function(){
+
+};
+
+uploadService.downloadFile = function(){
+
+};
+
+uploadService.showAllFiles = function(){
+
+};
+
 
 module.exports = uploadService;

@@ -14,7 +14,6 @@ const fileRoutes = [
         path: '/files/upload',
         handler: {
             file: 'updownloadview.html'
-
         },
         config: {
             auth:{
@@ -27,15 +26,16 @@ const fileRoutes = [
     },
     {
         method: 'POST',
-        path: '/files/submit',
+        path: '/files/upload/submit',
         handler: function (request, reply) {
             var form = new multiparty.Form();
-            form.parse(request.payload, function (error, fields, file) {
+            form.parse(request.payload, function (error,fields,file) {
+
                 if (error) {
                     return reply(error);
                 }
                 else {
-                    fileHandler.uploadFile(file.file[0], reply);
+                    fileHandler.uploadFile(fields,file.file[0],request,reply);
                 }
             });
         },
