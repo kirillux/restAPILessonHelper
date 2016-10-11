@@ -7,11 +7,12 @@ const fs = require('fs');
 const multiparty = require('multiparty');
 const Path = require('path');
 const Joi = require('joi');
+const Boom = require('boom');
 
 const fileRoutesVak = [
     {
         method: 'GET',
-        path: '/api/vak/files',
+        path: '/files/vak/',
         handler: {
             file: 'updownloadfilevak.html'
         },
@@ -25,7 +26,7 @@ const fileRoutesVak = [
     },
     {
         method: 'GET',
-        path: '/api/vak/{id}/files/',
+        path: '/files/vak/{id}/',
         handler: fileHandlerVak.getFilesVak,
         config: {
             validate: {
@@ -39,13 +40,13 @@ const fileRoutesVak = [
     },
     {
         method: 'POST',
-        path: '/api/vak/files/upload/submit',
+        path: '/files/vak/upload/submit/',
         handler: function (request, reply) {
             var form = new multiparty.Form();
             form.parse(request.payload, function (error, fields, file) {
 
                 if (error) {
-                    return reply(error);
+                    return reply(Boom.badRequest(error));
                 }
                 else {
                     fileHandlerVak.uploadFileBijVak(fields, file.file[0],reply);

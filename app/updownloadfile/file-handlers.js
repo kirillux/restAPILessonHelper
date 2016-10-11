@@ -6,9 +6,6 @@ const fs = require('fs');
 const Boom = require('boom');
 const fileHandler = {};
 const FileModel = new require('../models/file');
-const VakModel = new require('../models/vak');
-
-
 
 fileHandler.downloadFile = function (request, reply) {
     FileModel.findById({_id: request.params.id}, function (error, data) {
@@ -34,7 +31,7 @@ fileHandler.uploadFile = function (fields, file, reply) {
         if (error) {
             reply(Boom.badRequest(error));
         }
-        if (file.originalFilename.length === 0) {
+        else if (file.originalFilename.length === 0) {
             reply(Boom.lengthRequired(error))
         }
         else {
