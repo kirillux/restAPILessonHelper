@@ -7,10 +7,10 @@ const internals = {};
 
 ////////////////***************************************** Setup values Vak***********************//////////////////////////////
 //Vak id that exists
-internals.existentVakIdUrl = '/api/vak/57dbdf11a744ce19d8c195ab';
+internals.existentVakIdUrl = '/api/vak/57d9596d37cf2c27f8216829';
 //Valid vak id that does not exists
 internals.nonExistentVakIdUrlValid = '/api/vak/57dbdf11a744ce19d8c195aa';
-internals.existentVakIdUrlComment = '/api/vak/57dbdf11a744ce19d8c195ab/comment'
+internals.existentVakIdUrlComment = '/api/vak/57d9596d37cf2c27f8216829/comment'
 ////////////////***************************************** Setup User credentials ***********************//////////////////////////////
 
 //Test user correct credentials
@@ -18,7 +18,6 @@ internals.testUserId = '57ebde2e3650341a98398322';
 internals.testUserIdAdmin = '57ecd72a7c343a1c281c1bcb';
 internals.goodPasswordAll = 'bacon';
 ////////////////***************************************** Start Tests functions***********************///////////////////////////
-
 
 //Test lab tutorial Example Test
 lab.experiment('test tutorial', function () {

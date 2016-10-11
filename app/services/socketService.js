@@ -14,7 +14,7 @@ socketService.init = function (listener) {
         for (key in sockets) {
             console.log(key);
             socketService.send("Connected user: " + socket.id, key);
-        };
+    };
         sockets[socket.id] = socket;
         socket.on('disconnect', function () {
             socketService.disconnect(socket.id);
@@ -29,7 +29,8 @@ socketService.send = function (message, socketId) {
 
 socketService.sendAll = function (message) {
     for (let key in sockets) {
-        sockets[key].emit('comment message', message);
+        socketService.send(message,key);
+        //sockets[key].emit('comment message', message);
     }
 };
 socketService.disconnect = function (id) {

@@ -23,7 +23,6 @@ fileHandlerVak.getFilesVak = function (request, reply) {
     });
 };
 
-
 fileHandlerVak.uploadFileBijVak = function (fields, file, reply) {
     //Find model by ID
     VakModel.findById({_id: fields.vakId}, function (error, data) {

@@ -28,7 +28,7 @@ const fileRoutes = [
         handler: function (request, reply) {
             var form = new multiparty.Form();
             form.parse(request.payload, function (error, fields, file) {
-
+                console.log(request.payload);
                 if (error) {
                     return reply(error);
                 }

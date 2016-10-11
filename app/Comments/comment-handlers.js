@@ -29,10 +29,14 @@ commentHandlers.postComment = function (request, reply) {
                 if (error) {
                     reply(Boom.badRequest(error));
                 }
-                socketService.sendAll(JSON.stringify('bericht:' + comment.bericht + ' geplaatst door user: ' + comment.user));
-                reply(data);
+                else {
+                    socketService.sendAll(JSON.stringify('bericht:' + comment.bericht + ' geplaatst door user: ' + comment.user));
+                    reply(data);
+                }
+
             });
         }
+
     });
 };
 module.exports = commentHandlers;
