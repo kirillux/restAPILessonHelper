@@ -8,6 +8,8 @@ fileRoutesApi.register = function (server,options,next) {
     //Implement routes
     const upDownloadRoutes = require('./file-routes');
     server.route(upDownloadRoutes);
+    const upDownloadRoutesVak = require('./file-routes-vak');
+    server.route(upDownloadRoutesVak);
     next();
 };
 fileRoutesApi.register.attributes =

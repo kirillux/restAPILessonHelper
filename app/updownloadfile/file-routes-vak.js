@@ -1,21 +1,22 @@
 /**
- * Created by Kirill on 9/29/2016.
+ * Created by Kirill on 10/11/2016.
  */
 'use strict';
-const fileHandler = require('./file-handlers');
+const fileHandlerVak = require('./file-handlers-vak');
 const fs = require('fs');
 const multiparty = require('multiparty');
 const Path = require('path');
 const Joi = require('joi');
 
-const fileRoutes = [
+const fileRoutesVak = [
     {
         method: 'GET',
-        path: '/files/upload',
+        path: '/api/vak/files',
         handler: {
-            file: 'updownloadview.html'
+            file: 'updownloadfilevak.html'
         },
         config: {
+
             // Swagger documentation fields tags, description, note
             tags: ['api'],
             description: 'Server upload html file',
@@ -23,8 +24,22 @@ const fileRoutes = [
         }
     },
     {
+        method: 'GET',
+        path: '/api/vak/{id}/files/',
+        handler: fileHandlerVak.getFilesVak,
+        config: {
+            validate: {
+                params: {
+                    id: Joi.string().required(),
+                }
+            },
+            // Swagger documentation fields tags, description, note
+            tags: ['api'],
+        }
+    },
+    {
         method: 'POST',
-        path: '/files/upload/submit',
+        path: '/api/vak/files/upload/submit',
         handler: function (request, reply) {
             var form = new multiparty.Form();
             form.parse(request.payload, function (error, fields, file) {
@@ -33,7 +48,7 @@ const fileRoutes = [
                     return reply(error);
                 }
                 else {
-                    fileHandler.uploadFile(fields, file.file[0], reply);
+                    fileHandlerVak.uploadFileBijVak(fields, file.file[0],reply);
                 }
             });
         },
@@ -48,24 +63,7 @@ const fileRoutes = [
                 parse: false
             },
         }
-    },
-    {
-        method: 'GET',
-        path: '/files/download/{id}',
-        handler: fileHandler.downloadFile,
-        config: {
-            // Swagger documentation fields tags, description, note
-            tags: ['api'],
-            validate: {
-                params: {
-                    id: Joi.string().required(),
-                }
-            }
-        }
-    },
+    }
+]
 
-
-
-];
-
-module.exports = fileRoutes;
+module.exports = fileRoutesVak;

@@ -11,6 +11,6 @@ let vakSchema = new Schema({
     vakLeraar: String, //id of user,
     vakBeschrijving: String,
     comments:[],
-    files:[]
+    files:[{ type: Schema.ObjectId, ref: 'File' }]
 });
 module.exports = Mongoose.model('Vak', vakSchema, 'Vak');

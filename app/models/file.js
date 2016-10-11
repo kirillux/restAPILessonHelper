@@ -10,7 +10,6 @@ let fileSchema = new Schema({
     contentType: String,
     created: {type: Date, default: Date.now},
     fileData: Buffer,
-
 });
 
 module.exports = Mongoose.model('File', fileSchema, 'File');
