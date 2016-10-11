@@ -26,7 +26,7 @@ fileHandlerVak.getFilesVak = function (request, reply) {
 
 fileHandlerVak.uploadFileBijVak = function (fields, file, reply) {
     //Find model by ID
-    let vakGegevens = VakModel.findById({_id: fields.vakId}, function (error, data) {
+    VakModel.findById({_id: fields.vakId}, function (error, data) {
         if (error) {
             reply(Boom.badRequest(error));
         }
