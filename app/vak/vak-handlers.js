@@ -82,4 +82,35 @@ VakHandlers.deleteVakById = function (request, reply) {
         }
     });
 };
+
+VakHandlers.searchVakByName = function (request, reply) {
+    // options 'i' makes the search case-insensitive
+    let searchInput = new RegExp(request.params.vakName, 'i');
+    let query = VakModel.find({vakname:{$regex: searchInput}});
+    query.select('vakname');
+    query.exec(function (error, data) {
+        if (error || data.length === 0)
+        {
+            reply(Boom.notFound(error));
+        } else{
+            reply(data);
+        }
+
+    });
+
+    //VakModel.find({vakname:{$regex: searchInput }}, function (error, data) {
+    //    console.log(vakNameSearch)
+    //    if (error) {
+    //        reply(Boom.notFound(error));
+    //    } else if(data.length === 0)
+    //    {
+    //        reply(Boom.notFound(error))
+    //    }
+    //    else {
+    //        reply(data);
+    //    }
+    //
+    //});
+};
+
 module.exports = VakHandlers;

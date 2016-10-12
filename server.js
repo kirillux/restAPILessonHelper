@@ -25,7 +25,7 @@ Mongoose.connect('mongodb://adminhapi:admintest@ds029466.mlab.com:29466/lessonhe
 
 //Hapi server connection API
 server.connection({
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
     labels: 'api'
 });

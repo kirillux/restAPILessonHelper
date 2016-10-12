@@ -91,6 +91,21 @@ const vakRoutes = [
                 }
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/api/vak/search/{vakName}',
+        handler: vakHandlers.searchVakByName,
+        config: {
+            tags: ['api'],
+            description: 'Remove specific vak data',
+            notes: 'Remove specific vak data',
+            validate: {
+                params: {
+                    vakName: Joi.string().required()
+                }
+            }
+        }
     }
 
 ];
