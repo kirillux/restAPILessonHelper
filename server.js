@@ -97,6 +97,9 @@ const optionsGood = {
         },
         {
             register: require('./app/realtimeComments/index')
+        },
+        {
+            register: require('./app/polls/index')
         }
 
     ], (error) => {
